@@ -78,7 +78,6 @@ kexec(char *path, char **argv)
   end_op();
   ip = 0;
 
-  // guard page 0 so null derefs fault.
   uvmclear(pagetable, 0);
 
   p = myproc();

@@ -277,7 +277,6 @@ freewalk(pagetable_t pagetable)
   kfree((void*)pagetable);
 }
 
-// count valid leaf pages in a page table tree.
 int
 walk_used(pagetable_t pagetable)
 {
