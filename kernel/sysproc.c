@@ -146,3 +146,48 @@ sys_waitx(void)
 
   return kwaitx(addr, rtime_addr, stime_addr);
 }
+
+uint64
+sys_getusedmem(void)
+{
+  int pages = walk_used(kernel_pagetable);
+  return (uint64)pages * PGSIZE;
+}
+
+uint64
+sys_mprotect(void)
+{
+  uint64 va;
+  struct proc *p = myproc();
+  pte_t *pte;
+
+  argaddr(0, &va);
+  va = PGROUNDDOWN(va);
+
+  pte = walk(p->pagetable, va, 0);
+  if(pte == 0 || (*pte & PTE_V) == 0)
+    return -1;
+
+  *pte &= ~PTE_W;
+  sfence_vma();
+  return 0;
+}
+
+uint64
+sys_munprotect(void)
+{
+  uint64 va;
+  struct proc *p = myproc();
+  pte_t *pte;
+
+  argaddr(0, &va);
+  va = PGROUNDDOWN(va);
+
+  pte = walk(p->pagetable, va, 0);
+  if(pte == 0 || (*pte & PTE_V) == 0)
+    return -1;
+
+  *pte |= PTE_W;
+  sfence_vma();
+  return 0;
+}

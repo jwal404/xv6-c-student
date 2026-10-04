@@ -78,6 +78,9 @@ kexec(char *path, char **argv)
   end_op();
   ip = 0;
 
+  // guard page 0 so null derefs fault.
+  uvmclear(pagetable, 0);
+
   p = myproc();
   uint64 oldsz = p->sz;
 
@@ -126,7 +129,7 @@ kexec(char *path, char **argv)
     if(*s == '/')
       last = s+1;
   safestrcpy(p->name, last, sizeof(p->name));
-    
+
   // Commit to the user image.
   oldpagetable = p->pagetable;
   p->pagetable = pagetable;
