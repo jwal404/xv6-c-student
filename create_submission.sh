@@ -1,3 +1,3 @@
 set -e
 make clean
-zip -r COMPSCI340\_A2\_C\_\<UPI\> kernel mkfs user Makefile README.xv6 reflection.pdf
+zip -r CS340\_A3\_C\_\<UPI\> kernel mkfs user Makefile README.xv6 reflection.pdf
