@@ -1,3 +1,3 @@
 set -e
 make clean
-zip -r CS340\_A3\_C\_\<UPI\> kernel mkfs user Makefile README.xv6 reflection.pdf
+zip -r CS340_A3_C_jwal404 kernel mkfs user Makefile README.xv6 reflection.pdf
